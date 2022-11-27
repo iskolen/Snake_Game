@@ -3,6 +3,8 @@
 #include <conio.h>
 #include <vector>
 #include <string>
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -10,6 +12,15 @@ using namespace std;
 const char fieldBackground = '*';
 const int fieldX = 8, fieldY = 4;
 vector<vector<char>>field(fieldY, vector<char>(fieldX, fieldBackground));
+
+int GetRandomNumber(int min, int max)
+{
+	srand(time(NULL));
+	int num = min + rand() % (max - min + 1);
+
+	return num;
+}
+
 
 
 void printField() 
@@ -41,7 +52,8 @@ appleField apple;
 
 void placeApple()
 {
-	apple.coordinat = { 2, 6 };
+	
+	apple.coordinat = { GetRandomNumber(0, 3), GetRandomNumber(0, 7) };
 	for (int i = 0; i < field.size(); i++) 
 	{
 		for (int j = 0; j < field[i].size(); j++) 
@@ -84,6 +96,32 @@ void placeSnake()
 	}
 }
 
+
+
+/*void KeyStroke()
+{
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case 'a':
+			dir = left;
+			break;
+		case 'd':
+			dir = right;
+			break;
+		case 'w':
+			dir = up;
+			break;
+		case 's':
+			dir = down;
+			break;
+		case 'x':
+			gameOver = true;
+			break;
+		}
+	}
+}*/
 
 
 int main() {
