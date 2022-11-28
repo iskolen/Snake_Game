@@ -1,7 +1,7 @@
 ﻿  Snake_Game.cpp
-c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(18): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(57): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(59): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(84): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(86): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(24): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(66): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(110): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\documents\github\snake_game\snake_game\snake_game.cpp(112): warning C4018: <: несоответствие типов со знаком и без знака
   Snake_Game.vcxproj -> C:\Users\Admin\Documents\GitHub\Snake_Game\Debug\Snake_Game.exe

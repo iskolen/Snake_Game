@@ -5,6 +5,7 @@
 #include <string>
 #include <time.h>
 #include <stdlib.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -12,8 +13,13 @@ using namespace std;
 const char fieldBackground = '*';
 const int fieldX = 8, fieldY = 4;
 vector<vector<char>>field(fieldY, vector<char>(fieldX, fieldBackground));
+enum eDirection { LEFT, RIGHT, UP, DOWN };
+eDirection dir;
 
-int GetRandomNumber(int min, int max)
+
+
+
+int getRandomNumber(int min, int max)
 {
 	srand(time(NULL));
 	int num = min + rand() % (max - min + 1);
@@ -25,6 +31,7 @@ int GetRandomNumber(int min, int max)
 
 void printField() 
 {
+	system("cls");
 	for (auto &line : field) {
 		for (auto &element : line) {
 			cout << element << ' ';
@@ -53,7 +60,7 @@ appleField apple;
 void placeApple()
 {
 	
-	apple.coordinat = { GetRandomNumber(0, 3), GetRandomNumber(0, 7) };
+	apple.coordinat = { getRandomNumber(0, 3), getRandomNumber(0, 7) };
 	for (int i = 0; i < field.size(); i++) 
 	{
 		for (int j = 0; j < field[i].size(); j++) 
@@ -76,7 +83,7 @@ struct snakeField
 };
 snakeField snake;
 
-void placeSnake()
+/*void placeSnake()
 {
 	snake.length = 3;
 	snake.coordinat = { 2, 2 };
@@ -94,38 +101,75 @@ void placeSnake()
 			}
 		}
 	}
+}*/
+
+void placeSnake()
+{
+	snake.coordinat = { 2, 2 };
+
+	for (int i = 0; i < field.size(); i++)
+	{
+		for (int j = 0; j < field[i].size(); j++)
+		{
+			if ((i == snake.coordinat.x) && (j == snake.coordinat.y))
+			{
+				field[i][j] = snake.symbol;
+			}
+		}
+	}
 }
 
 
 
-/*void KeyStroke()
+void keyStroke()
 {
 	if (_kbhit())
 	{
 		switch (_getch())
 		{
 		case 'a':
-			dir = left;
+			dir = LEFT;
 			break;
 		case 'd':
-			dir = right;
+			dir = RIGHT;
 			break;
 		case 'w':
-			dir = up;
+			dir = UP;
 			break;
 		case 's':
-			dir = down;
-			break;
-		case 'x':
-			gameOver = true;
+			dir = DOWN;
 			break;
 		}
 	}
-}*/
+}
+
+void moveSnake() {
+	switch (dir)
+	{
+	case LEFT:
+		snake.coordinat.x--;
+		break;
+	case RIGHT:
+		snake.coordinat.x++;
+		break;
+	case UP:
+		snake.coordinat.y--;
+		break;
+	case DOWN:
+		snake.coordinat.y++;
+		break;
+	}
+}
 
 
 int main() {
-	placeApple();
-	placeSnake();
-	printField();
+	dir = LEFT;
+	while (1)
+	{
+		placeSnake();
+		printField();
+		keyStroke();
+		moveSnake();
+		Sleep(1000);
+	}
 }
