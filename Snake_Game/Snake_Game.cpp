@@ -13,10 +13,10 @@ using namespace std;
 const char fieldBackground = '*';
 const int fieldX = 8, fieldY = 4;
 vector<vector<char>>field(fieldY, vector<char>(fieldX, fieldBackground));
-enum eDirection { LEFT, RIGHT, UP, DOWN };
+bool gameOver = false;
+bool eatApple = false;
+enum eDirection { LEFT, RIGHT, UP, DOWN, STOP };
 eDirection dir;
-
-
 
 
 int getRandomNumber(int min, int max)
@@ -83,11 +83,8 @@ struct snakeField
 };
 snakeField snake;
 
-/*void placeSnake()
+void placeSnake()
 {
-	snake.length = 3;
-	snake.coordinat = { 2, 2 };
-
 	for (int i = 0; i < field.size(); i++)
 	{
 		for (int j = 0; j < field[i].size(); j++)
@@ -101,12 +98,10 @@ snakeField snake;
 			}
 		}
 	}
-}*/
+}
 
-void placeSnake()
+/*void placeSnake()
 {
-	snake.coordinat = { 2, 2 };
-
 	for (int i = 0; i < field.size(); i++)
 	{
 		for (int j = 0; j < field[i].size(); j++)
@@ -117,59 +112,145 @@ void placeSnake()
 			}
 		}
 	}
+}*/
+
+void collisionWall()
+{
+	if (snake.coordinat.x > 3 || snake.coordinat.y > 7 || snake.coordinat.x < 0 || snake.coordinat.y < 0)
+	{
+		gameOver = true;
+	}
+}
+
+void removeSnake()
+{
+	for (int i = 0; i < field.size(); i++)
+	{
+		for (int j = 0; j < field[i].size(); j++)
+		{
+			if ((i == snake.coordinat.x) && (j == snake.coordinat.y))
+			{
+				field[i][j] = fieldBackground;
+			}
+		}
+	}
+}
+
+void removeApple()
+{
+	for (int i = 0; i < field.size(); i++)
+	{
+		for (int j = 0; j < field[i].size(); j++)
+		{
+			if ((i == apple.coordinat.x) && (j == apple.coordinat.y))
+			{
+				field[i][j] = fieldBackground;
+			}
+		}
+	}
 }
 
 
+void isGameOver()
+{
+	if (gameOver == true)
+	{
+		field[1][0] = 'G';
+		field[1][1] = 'a';
+		field[1][2] = 'm';
+		field[1][3] = 'e';
+		field[1][4] = 'O';
+		field[1][5] = 'v';
+		field[1][6] = 'e';
+		field[1][7] = 'r';
+	}
+}
 
-void keyStroke()
+
+void moveSnake()
+{
+	switch (dir)
+	{
+	case LEFT:
+		removeSnake();
+		snake.coordinat.y--;
+		break;
+	case RIGHT:
+		removeSnake();
+		snake.coordinat.y++;
+		break;
+	case UP:
+		removeSnake();
+		snake.coordinat.x--;
+		break;
+	case DOWN:
+		removeSnake();
+		snake.coordinat.x++;
+		break;
+	case STOP:
+		break;
+	}
+}
+
+void pressKey()
 {
 	if (_kbhit())
 	{
 		switch (_getch())
 		{
 		case 'a':
+			removeSnake();
+			snake.coordinat.y--;
 			dir = LEFT;
 			break;
 		case 'd':
+			removeSnake();
+			snake.coordinat.y++;
 			dir = RIGHT;
 			break;
 		case 'w':
+			removeSnake();
+			snake.coordinat.x--;
 			dir = UP;
 			break;
 		case 's':
+			removeSnake();
+			snake.coordinat.x++;
 			dir = DOWN;
 			break;
 		}
 	}
 }
 
-void moveSnake() {
-	switch (dir)
+void isEatApple()
+{
+	if (eatApple == true)
 	{
-	case LEFT:
-		snake.coordinat.x--;
-		break;
-	case RIGHT:
-		snake.coordinat.x++;
-		break;
-	case UP:
-		snake.coordinat.y--;
-		break;
-	case DOWN:
-		snake.coordinat.y++;
-		break;
+		placeApple();
 	}
 }
 
-
 int main() {
-	dir = LEFT;
-	while (1)
+	snake.coordinat = { 2, 2 };
+	snake.length = 1;
+	dir = STOP;
+	placeApple();
+	while (gameOver != true)
 	{
 		placeSnake();
 		printField();
-		keyStroke();
 		moveSnake();
-		Sleep(1000);
+		pressKey();
+		if (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
+		{
+			eatApple = true;
+			snake.length += 1;
+		}
+		isEatApple();
+		collisionWall();
+		Sleep(300);
 	}
+	isGameOver();
+	removeApple();
+	printField();
 }
