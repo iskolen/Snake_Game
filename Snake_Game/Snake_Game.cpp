@@ -11,8 +11,12 @@ using namespace std;
 
 
 const char fieldBackground = '*';
-const int fieldX = 8, fieldY = 4;
+const int fieldX = 8, fieldY = 8;
+int snakeX;
+int snakeY;
 vector<vector<char>>field(fieldY, vector<char>(fieldX, fieldBackground));
+vector<char>snakeVector(snakeX, snakeY);
+
 bool gameOver = false;
 bool eatApple = false;
 enum eDirection { LEFT, RIGHT, UP, DOWN, STOP };
@@ -29,7 +33,7 @@ int getRandomNumber(int min, int max)
 
 
 
-void printField() 
+void printField()
 {
 	system("cls");
 	for (auto &line : field) {
@@ -59,13 +63,21 @@ appleField apple;
 
 void placeApple()
 {
-	
-	apple.coordinat = { getRandomNumber(0, 3), getRandomNumber(0, 7) };
-	for (int i = 0; i < field.size(); i++) 
+	apple.coordinat = { getRandomNumber(0, (fieldY - 1)), getRandomNumber(0, (fieldX - 1)) };
+
+	if (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
 	{
-		for (int j = 0; j < field[i].size(); j++) 
+		while (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
 		{
-			if ((i == apple.coordinat.x) && (j == apple.coordinat.y)) 
+			apple.coordinat = { getRandomNumber(0, (fieldY - 1)), getRandomNumber(0, (fieldX - 1)) };;
+		}
+	}
+
+	for (int i = 0; i < field.size(); i++)
+	{
+		for (int j = 0; j < field[i].size(); j++)
+		{
+			if ((i == apple.coordinat.x) && (j == apple.coordinat.y))
 			{
 				field[i][j] = apple.symbol;
 			}
@@ -78,8 +90,11 @@ void placeApple()
 struct snakeField
 {
 	pointField coordinat;
+	int head;
+	int body;
 	int length;
-	const char symbol = '#';
+	const char symbolHead = 'O';
+	const char symbolBody = '#';
 };
 snakeField snake;
 
@@ -93,7 +108,7 @@ void placeSnake()
 			{
 				for (int l = j; l < (j + snake.length); l++)
 				{
-					field[i][l] = snake.symbol;
+					field[i][l] = snake.symbolHead;
 				}
 			}
 		}
@@ -116,7 +131,7 @@ void placeSnake()
 
 void collisionWall()
 {
-	if (snake.coordinat.x > 3 || snake.coordinat.y > 7 || snake.coordinat.x < 0 || snake.coordinat.y < 0)
+	if (snake.coordinat.x > (fieldY - 1) || snake.coordinat.y > (fieldX - 1) || snake.coordinat.x < 0 || snake.coordinat.y < 0)
 	{
 		gameOver = true;
 	}
@@ -227,6 +242,7 @@ void isEatApple()
 	if (eatApple == true)
 	{
 		placeApple();
+		eatApple = false;
 	}
 }
 
@@ -248,7 +264,7 @@ int main() {
 		}
 		isEatApple();
 		collisionWall();
-		Sleep(300);
+		Sleep(500);
 	}
 	isGameOver();
 	removeApple();
