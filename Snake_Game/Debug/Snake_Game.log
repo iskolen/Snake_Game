@@ -1,12 +1,42 @@
 ﻿  Snake_Game.cpp
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(28): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(68): error C2065: snake: необъявленный идентификатор
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(70): error C2065: snake: необъявленный идентификатор
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(76): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(78): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(103): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(105): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(142): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(144): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(156): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(158): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(27): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(82): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(84): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(86): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(107): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(109): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(111): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(124): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(126): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(187): error C2672: "std::move": не найдена соответствующая перегруженная функция
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(187): error C2780: _DestTy *std::move(_InIt,_InIt,_DestTy (&)[_DestSize]): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2758): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(187): error C2780: _OutIt std::move(_InIt,_InIt,_OutIt): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2742): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(187): error C2780: remove_reference<_Ty>::type &&std::move(_Ty &&) noexcept: требует аргументов: 1, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\type_traits(1587): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(193): error C2672: "std::move": не найдена соответствующая перегруженная функция
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(193): error C2780: _DestTy *std::move(_InIt,_InIt,_DestTy (&)[_DestSize]): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2758): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(193): error C2780: _OutIt std::move(_InIt,_InIt,_OutIt): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2742): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(193): error C2780: remove_reference<_Ty>::type &&std::move(_Ty &&) noexcept: требует аргументов: 1, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\type_traits(1587): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(199): error C2672: "std::move": не найдена соответствующая перегруженная функция
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(199): error C2780: _DestTy *std::move(_InIt,_InIt,_DestTy (&)[_DestSize]): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2758): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(199): error C2780: _OutIt std::move(_InIt,_InIt,_OutIt): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2742): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(199): error C2780: remove_reference<_Ty>::type &&std::move(_Ty &&) noexcept: требует аргументов: 1, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\type_traits(1587): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(205): error C2672: "std::move": не найдена соответствующая перегруженная функция
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(205): error C2780: _DestTy *std::move(_InIt,_InIt,_DestTy (&)[_DestSize]): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2758): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(205): error C2780: _OutIt std::move(_InIt,_InIt,_OutIt): требует аргументов: 3, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2742): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(205): error C2780: remove_reference<_Ty>::type &&std::move(_Ty &&) noexcept: требует аргументов: 1, имеется: 0
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\type_traits(1587): note:  см. объявление "std::move"
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(234): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(268): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(302): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\вадим\documents\github\snake_game\snake_game\snake_game\snake_game.cpp(336): warning C4018: <: несоответствие типов со знаком и без знака

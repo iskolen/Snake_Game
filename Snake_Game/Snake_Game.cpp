@@ -9,19 +9,18 @@
 
 using namespace std;
 
-
 const char fieldBackground = '*';
 const int fieldX = 8, fieldY = 8;
 int snakeX;
 int snakeY;
 vector<vector<char>>field(fieldY, vector<char>(fieldX, fieldBackground));
 vector<char>snakeVector(snakeX, snakeY);
+int saveLastX = 0, saveLastY = 0;
 
 bool gameOver = false;
 bool eatApple = false;
 enum eDirection { LEFT, RIGHT, UP, DOWN, STOP };
 eDirection dir;
-
 
 int getRandomNumber(int min, int max)
 {
@@ -30,8 +29,6 @@ int getRandomNumber(int min, int max)
 
 	return num;
 }
-
-
 
 void printField()
 {
@@ -44,13 +41,12 @@ void printField()
 	}
 }
 
-
-
 struct pointField
 {
 	int x;
 	int y;
 };
+
 struct appleField
 {
 	pointField coordinat;
@@ -59,99 +55,71 @@ struct appleField
 pointField point;
 appleField apple;
 
+struct snakeField
+{
+	vector <pointField> body;
+	const char symbol = '#';
+};
+snakeField snake;
 
-
-void placeApple()
+void placeApple(int snakeX, int snakeY)//Ставим яблоко на поле
 {
 	apple.coordinat = { getRandomNumber(0, (fieldY - 1)), getRandomNumber(0, (fieldX - 1)) };
 
-	if (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
+	if (snakeX == apple.coordinat.x && snakeY == apple.coordinat.y)// Условие для того, чтобы яболоко не появлялось на месте змейки
 	{
-		while (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
+		while (snakeX == apple.coordinat.x && snakeY == apple.coordinat.y)
 		{
 			apple.coordinat = { getRandomNumber(0, (fieldY - 1)), getRandomNumber(0, (fieldX - 1)) };;
 		}
 	}
 
-	for (int i = 0; i < field.size(); i++)
-	{
-		for (int j = 0; j < field[i].size(); j++)
-		{
-			if ((i == apple.coordinat.x) && (j == apple.coordinat.y))
-			{
-				field[i][j] = apple.symbol;
-			}
-		}
-	}
+	field[apple.coordinat.x][apple.coordinat.y] = apple.symbol;
 }
 
-
-
-struct snakeField
+void placeSnake()// Ставим змейку на поле
 {
-	pointField coordinat;
-	int head;
-	int body;
-	int length;
-	const char symbolHead = 'O';
-	const char symbolBody = '#';
-};
-snakeField snake;
-
-void placeSnake()
-{
-	for (int i = 0; i < field.size(); i++)
+	for (int s = 0; s < snake.body.size(); s++)
 	{
-		for (int j = 0; j < field[i].size(); j++)
+		for (int i = 0; i < field.size(); i++)
 		{
-			if ((i == snake.coordinat.x) && (j == snake.coordinat.y))
+			for (int j = 0; j < field[i].size(); j++)
 			{
-				for (int l = j; l < (j + snake.length); l++)
+				if ((i == snake.body[s].x) && (j == snake.body[s].y))
 				{
-					field[i][l] = snake.symbolHead;
+					field[i][j] = snake.symbol;
 				}
 			}
 		}
 	}
 }
 
-/*void placeSnake()
+void collisionWall()// Столкновение со стеной
 {
-	for (int i = 0; i < field.size(); i++)
-	{
-		for (int j = 0; j < field[i].size(); j++)
-		{
-			if ((i == snake.coordinat.x) && (j == snake.coordinat.y))
-			{
-				field[i][j] = snake.symbol;
-			}
-		}
-	}
-}*/
-
-void collisionWall()
-{
-	if (snake.coordinat.x > (fieldY - 1) || snake.coordinat.y > (fieldX - 1) || snake.coordinat.x < 0 || snake.coordinat.y < 0)
+	if (snake.body[0].x > (fieldY - 1) || snake.body[0].y > (fieldX - 1) || snake.body[0].x < 0 || snake.body[0].y < 0)
 	{
 		gameOver = true;
 	}
 }
 
-void removeSnake()
+void removeSnake()// Удаление змейки
 {
-	for (int i = 0; i < field.size(); i++)
+	for (int s = 0; s < snake.body.size(); s++)
 	{
-		for (int j = 0; j < field[i].size(); j++)
+		for (int i = 0; i < field.size(); i++)
 		{
-			if ((i == snake.coordinat.x) && (j == snake.coordinat.y))
+			for (int j = 0; j < field[i].size(); j++)
 			{
-				field[i][j] = fieldBackground;
+				if ((i == snake.body[s].x) && (j == snake.body[s].y))
+				{
+					field[i][j] = fieldBackground;
+				}
 			}
 		}
 	}
 }
 
-void removeApple()
+void removeApple()// Удаление яблока
 {
 	for (int i = 0; i < field.size(); i++)
 	{
@@ -166,7 +134,7 @@ void removeApple()
 }
 
 
-void isGameOver()
+void isGameOver()// Конец игры - вывод на поле "GameOver" 
 {
 	if (gameOver == true)
 	{
@@ -181,33 +149,32 @@ void isGameOver()
 	}
 }
 
-
-void moveSnake()
+void moveSnake()// Передвижение змейки
 {
 	switch (dir)
 	{
 	case LEFT:
 		removeSnake();
-		snake.coordinat.y--;
+		snake.body[0].y--;
 		break;
 	case RIGHT:
 		removeSnake();
-		snake.coordinat.y++;
+		snake.body[0].y++;
 		break;
 	case UP:
 		removeSnake();
-		snake.coordinat.x--;
+		snake.body[0].x--;
 		break;
 	case DOWN:
 		removeSnake();
-		snake.coordinat.x++;
+		snake.body[0].x++;
 		break;
 	case STOP:
 		break;
 	}
 }
 
-void pressKey()
+void pressKey()// Нажатие на клавиши
 {
 	if (_kbhit())
 	{
@@ -215,58 +182,207 @@ void pressKey()
 		{
 		case 'a':
 			removeSnake();
-			snake.coordinat.y--;
+			snake.body[0].y--;
 			dir = LEFT;
+			move();
 			break;
 		case 'd':
 			removeSnake();
-			snake.coordinat.y++;
+			snake.body[0].y++;
 			dir = RIGHT;
+			move();
 			break;
 		case 'w':
 			removeSnake();
-			snake.coordinat.x--;
+			snake.body[0].x--;
 			dir = UP;
+			move();
 			break;
 		case 's':
 			removeSnake();
-			snake.coordinat.x++;
+			snake.body[0].x++;
 			dir = DOWN;
+			move();
 			break;
 		}
 	}
 }
 
-void isEatApple()
+void isEatApple()// Если голова находиться на яблоке, тогда яблоко сьедено
 {
 	if (eatApple == true)
 	{
-		placeApple();
+
+		placeApple(snake.body[0].x, snake.body[0].y);
 		eatApple = false;
 	}
 }
 
-int main() {
-	snake.coordinat = { 2, 2 };
-	snake.length = 1;
+void setupValues()// Установка начальных значений
+{
+	snake.body = { { 2, 2 } };
 	dir = STOP;
-	placeApple();
+	placeApple(snake.body[0].x, snake.body[0].y);
+}
+
+void move()
+{
+	int saveX = 0, saveY = 0, saveX1 = 0, saveY1 = 0;
+	pointField newPoint;
+	if (dir == UP)
+	{
+		for (int i = 0; i < snake.body.size(); i++)
+		{
+			if (i + 1 == snake.body.size())// для конца змейки
+			{
+				saveLastX = snake.body[i].x;
+				saveLastY = snake.body[i].y;
+				field[snake.body[i].x][snake.body[i].y] = '*';
+				snake.body.erase(end(snake.body) - 1);
+				snake.body.insert(end(snake.body), newPoint);
+			}
+			else
+			{
+				if (i == 0)
+				{
+					saveX = snake.body[i].x;
+					saveY = snake.body[i].y;
+					newPoint = { saveX, saveY };
+					snake.body[i].x = snake.body[i].x - 1;
+				}
+				else
+				{
+					saveX1 = snake.body[i].x;
+					saveY1 = snake.body[i].y;
+					snake.body[i].x = saveX;
+					snake.body[i].y = saveY;
+					saveX = saveX1;
+					saveY = saveY1;
+					newPoint = { saveX, saveY };
+				}
+			}
+		}
+	}
+	if (dir == LEFT)
+	{
+		for (int i = 0; i < snake.body.size(); i++)
+		{
+			if (i + 1 == snake.body.size())// для конца змейки
+			{
+				saveLastX = snake.body[i].x;
+				saveLastY = snake.body[i].y;
+				field[snake.body[i].x][snake.body[i].y] = '*';
+				snake.body.erase(end(snake.body) - 1);
+				snake.body.insert(end(snake.body), newPoint);
+			}
+			else
+			{
+				if (i == 0)
+				{
+					saveX = snake.body[i].x;
+					saveY = snake.body[i].y;
+					newPoint = { saveX, saveY };
+					snake.body[i].y = snake.body[i].y - 1;
+				}
+				else
+				{
+					saveX1 = snake.body[i].x;
+					saveY1 = snake.body[i].y;
+					snake.body[i].x = saveX;
+					snake.body[i].y = saveY;
+					saveX = saveX1;
+					saveY = saveY1;
+					newPoint = { saveX, saveY };
+				}
+			}
+		}
+	}
+	if (dir == DOWN)
+	{
+		for (int i = 0; i < snake.body.size(); i++)
+		{
+			if (i + 1 == snake.body.size())// для конца змейки
+			{
+				saveLastX = snake.body[i].x;
+				saveLastY = snake.body[i].y;
+				field[snake.body[i].x][snake.body[i].y] = '*';
+				snake.body.erase(end(snake.body) - 1);
+				snake.body.insert(end(snake.body), newPoint);
+			}
+			else
+			{
+				if (i == 0)
+				{
+					saveX = snake.body[i].x;
+					saveY = snake.body[i].y;
+					newPoint = { saveX, saveY };
+					snake.body[i].x = snake.body[i].x + 1;
+				}
+				else
+				{
+					saveX1 = snake.body[i].x;
+					saveY1 = snake.body[i].y;
+					snake.body[i].x = saveX;
+					snake.body[i].y = saveY;
+					saveX = saveX1;
+					saveY = saveY1;
+					newPoint = { saveX, saveY };
+				}
+			}
+		}
+	}
+	if (dir == RIGHT)
+	{
+		for (int i = 0; i < snake.body.size(); i++)
+		{
+			if (i + 1 == snake.body.size())// для конца змейки
+			{
+				saveLastX = snake.body[i].x;
+				saveLastY = snake.body[i].y;
+				field[snake.body[i].x][snake.body[i].y] = '*';
+				snake.body.erase(end(snake.body) - 1);
+				snake.body.insert(end(snake.body), newPoint);
+			}
+			else
+			{
+				if (i == 0)
+				{
+					saveX = snake.body[i].x;
+					saveY = snake.body[i].y;
+					newPoint = { saveX, saveY };
+					snake.body[i].y = snake.body[i].y + 1;
+				}
+				else
+				{
+					saveX1 = snake.body[i].x;
+					saveY1 = snake.body[i].y;
+					snake.body[i].x = saveX;
+					snake.body[i].y = saveY;
+					saveX = saveX1;
+					saveY = saveY1;
+					newPoint = { saveX, saveY };
+				}
+			}
+		}
+	}
+}
+int main() {
+	setupValues();
 	while (gameOver != true)
 	{
 		placeSnake();
 		printField();
 		moveSnake();
 		pressKey();
-		if (snake.coordinat.x == apple.coordinat.x && snake.coordinat.y == apple.coordinat.y)
+		if (snake.body[0].x == apple.coordinat.x && snake.body[0].y == apple.coordinat.y)
 		{
 			eatApple = true;
-			snake.length += 1;
 		}
 		isEatApple();
 		collisionWall();
-		Sleep(500);
+		Sleep(600);
 	}
-	isGameOver();
 	removeApple();
+	isGameOver();
 	printField();
 }
